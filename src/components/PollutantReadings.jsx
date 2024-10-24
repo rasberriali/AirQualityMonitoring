@@ -1,12 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const PollutantReadings = () => {
-  const pollutants = [
-    { name: "CO2", value: 400, max: 1000 }, // Adjust max value as needed
-    { name: "PM1.0", value: 15, max: 100 },
-    { name: "PM2.5", value: 25, max: 100 },
-    { name: "PM10", value: 50, max: 100 },
-  ];
+  const [pollutants, setPollutants] = useState([
+    { name: "CO2", value: 0, max: 1000 }, 
+    { name: "PM2.5", value: 0, max: 100 },
+    { name: "PM10", value: 0, max: 100 },
+  ]);
+
+  useEffect(() => {
+    const fetchLatestData = async () => {
+      try {
+        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/AiRizzFunction');
+        const data = await response.json();
+
+        if (data.length > 0) {
+
+          const sortedData = data.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
+          const latestEntry = sortedData[0]; 
+
+          setPollutants([
+            { name: "CO2", value: parseInt(latestEntry.CO2_MQ135.N) || 0, max: 1000 },
+            { name: "PM1.0", value: parseInt(latestEntry.PM1_0.N) || 0, max: 100 },
+            { name: "PM2.5", value: parseInt(latestEntry.PM2_5.N) || 0, max: 100 },
+            { name: "PM10", value: parseInt(latestEntry.PM10.N) || 0, max: 100 },
+          ]);
+        }
+      } catch (error) {
+        console.error("Error fetching latest data:", error);
+      }
+    };
+
+    fetchLatestData();
+    const intervalId = setInterval(fetchLatestData, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div className="w-full bg-gray-900 p-6 rounded-lg shadow-lg">

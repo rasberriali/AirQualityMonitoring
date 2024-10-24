@@ -1,12 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const Heatmap = () => {
-  const heatmapData = [
-    [25, 40, 60, 80, 100],
-    [30, 50, 70, 90, 110],
-    [20, 35, 55, 75, 95],
-    [15, 45, 65, 85, 105],
-  ];
+  const [heatmapData, setHeatmapData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/AiRizzFunction");
+        const responseData = await response.json();
+
+        if (responseData.length > 0) {
+
+          const sortedData = responseData.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
+
+          const latestReadings = sortedData.slice(0, 4).map((entry) => ({
+            co2: parseInt(entry.CO2_MQ135.N) || 0,
+            pm1: parseInt(entry.PM1_0.N) || 0,
+            pm25: parseInt(entry.PM2_5.N) || 0,
+            pm10: parseInt(entry.PM10.N) || 0,
+          }));
+
+          setHeatmapData(latestReadings);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+    const intervalId = setInterval(fetchData, 5000); 
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const getColor = (value) => {
     if (value <= 40) return "bg-green-200";  // Good
@@ -18,17 +43,23 @@ const Heatmap = () => {
   return (
     <div className="w-full bg-gray-900 p-6 rounded-lg shadow-lg">
       <h3 className="text-lg font-semibold mb-4 text-center text-white">Air Quality Heatmap</h3>
-      <div className="grid grid-cols-5 gap-1 mb-4">
-        {heatmapData.map((row, rowIndex) =>
-          row.map((value, colIndex) => (
-            <div
-              key={`${rowIndex}-${colIndex}`}
-              className={`w-16 h-16 ${getColor(value)} flex items-center justify-center`}
-            >
-              <span className="text-xs text-gray-800 font-bold">{value}</span>
+      <div className="grid grid-cols-4 gap-2 mb-4">
+        {heatmapData.map((entry, index) => (
+          <React.Fragment key={index}>
+            <div className={`w-16 h-16 ${getColor(entry.co2)} flex items-center justify-center`}>
+              <span className="text-xs text-gray-800 font-bold">{entry.co2}</span>
             </div>
-          ))
-        )}
+            <div className={`w-16 h-16 ${getColor(entry.pm1)} flex items-center justify-center`}>
+              <span className="text-xs text-gray-800 font-bold">{entry.pm1}</span>
+            </div>
+            <div className={`w-16 h-16 ${getColor(entry.pm25)} flex items-center justify-center`}>
+              <span className="text-xs text-gray-800 font-bold">{entry.pm25}</span>
+            </div>
+            <div className={`w-16 h-16 ${getColor(entry.pm10)} flex items-center justify-center`}>
+              <span className="text-xs text-gray-800 font-bold">{entry.pm10}</span>
+            </div>
+          </React.Fragment>
+        ))}
       </div>
       <div className="flex justify-around text-white">
         <div className="flex items-center">

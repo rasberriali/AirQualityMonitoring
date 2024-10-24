@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const DataTable = () => {
-  const data = [
-    { time: "10:00 AM", CO2: "400 ppm", PM1_0: "15 µg/m³", PM2_5: "25 µg/m³", PM10: "50 µg/m³" },
-    // Add more data entries here...
-  ];
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () =>{
+      try{
+        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/AiRizzFunction');
+        const data = await response.json();
+
+        if (data.length > 0){
+          const sortedData = data.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
+          const latestReadings = sortedData.slice(0, 10).map((entry) => ({
+            time: entry.TimeStamp.S.trim(),
+            CO2: `${parseInt(entry.CO2_MQ135.N) || 0} ppmm`,
+            PM1_0: `${parseInt(entry.PM1_0.N) || 0} µg/m³`,
+            PM2_5: `${parseInt(entry.PM2_5.N) || 0} µg/m³`,
+            PM10: `${parseInt(entry.PM10.N) || 0} µg/m³`,
+          }));
+          setData(latestReadings);
+        }
+      } catch (error){
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+    const intervalId = setInterval(fetchData, 5000);
+
+    return () => clearInterval(intervalId);
+
+  }, [])
 
   return (
     <div className="w-full bg-gray-900 p-6 rounded-lg shadow-lg">

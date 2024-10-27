@@ -39,17 +39,10 @@ const WeatherWidget = () => {
       }
     };
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        fetchWeather(latitude, longitude);
-      },
-      (err) => {
-        console.error("Error getting location", err);
-        setError("Unable to fetch location.");
-        setLoading(false);
-      }
-    );
+    // Fixed latitude and longitude for Batangas City
+    const latitude = 13.7559;
+    const longitude = 121.0597;
+    fetchWeather(latitude, longitude);
   }, []);
 
   if (loading) return <div>Loading weather...</div>;
@@ -65,21 +58,18 @@ const WeatherWidget = () => {
 
   return (
     <div className="flex justify-between items-center text-slate-100 p-2 rounded-md gap-4 max-w-md">
-  
       <div className="flex items-center flex-col">
         <div className="text-sm font-normal">{weather.main.temp}°C</div>
-        
         <div className="">
           <img src={weatherIconUrl} alt="Weather Icon" className="w-10" />
         </div>
-        </div>
+      </div>
 
-        <div>
-          <div className="font-normal">{weather.name}</div>
-          <div className="text-xs">
-            {weather.sys.country}
-          </div>
-      
+      <div>
+        <div className="font-normal">{weather.name}</div>
+        <div className="text-xs">
+          {weather.sys.country}
+        </div>
       </div>
       <div className="border-l-2 border-blue-500 h-12"></div>
 

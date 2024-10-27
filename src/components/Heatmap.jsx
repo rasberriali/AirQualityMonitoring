@@ -34,9 +34,9 @@ const Heatmap = () => {
   }, []);
 
   const getColor = (value) => {
-    if (value <= 40) return "bg-green-200";  // Good
-    if (value <= 70) return "bg-yellow-400"; // Moderate
-    if (value <= 90) return "bg-orange-400"; // Unhealthy
+    if (value <= 500) return "bg-green-200";  // Good
+    if (value <= 1000) return "bg-yellow-400"; // Moderate
+    if (value <= 2000) return "bg-orange-400"; // Unhealthy
     return "bg-red-600";                      // Hazardous
   };
 

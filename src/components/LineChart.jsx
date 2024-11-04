@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement } from "chart.js";
 
@@ -34,6 +34,33 @@ const LineChart = () => {
       },
     ],
   });
+
+  const [isVisible, setIsVisible] = useState(false);
+  const textRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of the element is visible
+      }
+    );
+
+    if (textRef.current) {
+      observer.observe(textRef.current);
+    }
+
+    return () => {
+      if (textRef.current) {
+        observer.unobserve(textRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,25 +113,25 @@ const LineChart = () => {
             labels: timestamps,
             datasets: [
               {
-                label: "CO2 Levels",
+                label: "CO2 ",
                 data: co2Levels,
                 borderColor: "rgba(75, 192, 192, 1)",
                 backgroundColor: "rgba(75, 192, 192, 0.2)",
               },
               {
-                label: "PM1.0 Levels",
+                label: "PM1.0 ",
                 data: pm1_0Levels,
                 borderColor: "rgba(255, 99, 132, 1)",
                 backgroundColor: "rgba(255, 99, 132, 0.2)",
               },
               {
-                label: "PM2.5 Levels",
+                label: "PM2.5 ",
                 data: pm2_5Levels,
                 borderColor: "rgba(54, 162, 235, 1)",
                 backgroundColor: "rgba(54, 162, 235, 0.2)",
               },
               {
-                label: "PM10 Levels",
+                label: "PM10 ",
                 data: pm10Levels,
                 borderColor: "rgba(153, 102, 255, 1)",
                 backgroundColor: "rgba(153, 102, 255, 0.2)",
@@ -127,7 +154,21 @@ const LineChart = () => {
     <div className="w-full p-6 rounded-lg">
       <h3 className="text-lg font-semibold mb-4 text-center text-white">Time Series Line Chart</h3>
       <div className="bg-gray-800 p-4 rounded-lg">
-        <Line data={chartData} height={200} /> 
+        <Line data={chartData} height={200} />
+      </div>
+      <div className="flex flex-col items-center mt-6">
+        <div className="h-1 w-3/4 bg-gray-100 rounded-full mb-4"></div>
+        
+        <div 
+          ref={textRef} 
+          className={`text-gray-500 text-center text-base leading-relaxed shadow-md p-4 rounded-lg bg-gray-900 bg-opacity-60 max-w-3xl fade-in ${isVisible ? 'fade-in-visible' : ''}`}
+        >
+          This dynamic visualization presents real-time air quality data, showcasing the concentrations of key pollutants: 
+          <span style={{ color: "rgba(75, 192, 192, 1)" }}> CO2,</span> 
+          <span style={{ color: "rgba(255, 99, 132, 1)" }}> PM1.0,</span> 
+          <span style={{ color: "rgba(54, 162, 235, 1)" }}> PM2.5,</span> 
+          and <span style={{ color: "rgba(153, 102, 255, 1)" }}> PM10.</span> Each line represents the hourly averages, allowing you to monitor trends and fluctuations in air quality effectively.
+        </div>
       </div>
     </div>
   );

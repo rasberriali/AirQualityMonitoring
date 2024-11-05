@@ -6,7 +6,6 @@ import Header from "./components/Header";
 import Heatmap from "./components/Heatmap";
 import LineChart from "./components/LineChart";
 import PollutantReadings from "./components/PollutantReadings";
-import Weather from "./components/Weather";
 import GrabData from "./components/GrabData";
 import WeatherApi from "./components/WeatherApi";
 import HeroSection from "./components/HeroSection";

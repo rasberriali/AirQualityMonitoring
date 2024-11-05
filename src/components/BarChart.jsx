@@ -13,7 +13,7 @@ const BarChart = () => {
   useEffect(() =>{
     const fetchData = async() => {
       try {
-        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/AiRizzFunction');
+        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/new_AiRizz_Function');
         const data = await response.json();
 
         if (data.length > 0) {

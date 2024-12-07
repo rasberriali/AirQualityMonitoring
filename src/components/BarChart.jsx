@@ -5,43 +5,12 @@ import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Lege
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const BarChart = () => {
-<<<<<<< HEAD
   const [co2, setCO2] = useState(0);
   const [pm1, setPM1] = useState(0);
   const [pm25, setPM25] = useState(0);
   const [pm10, setPM10] = useState(0);
-
-  useEffect(() =>{
-    const fetchData = async() => {
-      try {
-        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/new_AiRizz_Function');
-        const data = await response.json();
-
-        if (data.length > 0) {
-          const sortedData = data.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
-          const latestData = sortedData[0];
-
-          setCO2(parseInt(latestData.CO2_MQ135.N) || 0);
-          setPM1(parseInt( latestData.PM1_0.N) || 0);
-          setPM25(parseInt(latestData.PM2_5.N) || 0);
-          setPM10(parseInt(latestData.PM10.N) || 0);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    };
-
-    fetchData();
-    const intervalId = setInterval(fetchData, 5000);
-    return () => clearInterval(intervalId);
-  }, []);
-
-  const data = {
-    labels: ["CO2", "PM1.0", "PM2.5", "PM10"],
-=======
   const [chartData, setChartData] = useState({
-    labels: [],
->>>>>>> 83e382dc795cd413f0a2118e195460fa24a9d3e9
+    labels: ["CO2", "PM1.0", "PM2.5", "PM10"],
     datasets: [
       {
         label: "Air Pollutant Levels",
@@ -65,6 +34,31 @@ const BarChart = () => {
 
   const [isVisible, setIsVisible] = useState(false);
   const textRef = useRef(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/new_AiRizz_Function');
+        const data = await response.json();
+
+        if (data.length > 0) {
+          const sortedData = data.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
+          const latestData = sortedData[0];
+
+          setCO2(parseInt(latestData.CO2_MQ135.N) || 0);
+          setPM1(parseInt(latestData.PM1_0.N) || 0);
+          setPM25(parseInt(latestData.PM2_5.N) || 0);
+          setPM10(parseInt(latestData.PM10.N) || 0);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+    const intervalId = setInterval(fetchData, 5000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -93,13 +87,11 @@ const BarChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/AiRizzFunction');
+        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/new_AiRizz_Function');
         const data = await response.json();
 
         if (data.length > 0) {
           const sortedData = data.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
-
-          // Extracting air quality data
           const latestData = sortedData[0];
           const airQualityData = [
             parseInt(latestData.CO2_MQ135.N) || 0,
@@ -110,7 +102,6 @@ const BarChart = () => {
 
           setChartData((prevState) => ({
             ...prevState,
-            labels: ["CO2", "PM1.0", "PM2.5", "PM10"],
             datasets: [
               {
                 ...prevState.datasets[0],
@@ -126,7 +117,6 @@ const BarChart = () => {
 
     fetchData();
     const intervalId = setInterval(fetchData, 5000);
-
     return () => clearInterval(intervalId);
   }, []);
 

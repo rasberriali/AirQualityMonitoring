@@ -9,6 +9,7 @@ import PollutantReadings from "./components/PollutantReadings";
 import GrabData from "./components/GrabData";
 import WeatherApi from "./components/WeatherApi";
 import HeroSection from "./components/HeroSection";
+import PublicPage from './Publicpage'; // Import the PublicPage component
 
 function App() {
   const lineChartRef = useRef(null);
@@ -25,39 +26,50 @@ function App() {
 
   return (
     <Router>
-      <div className="bg-[#001D31] min-h-screen flex flex-col">
-        <Header 
-          scrollToLineChart={() => scrollToRef(lineChartRef)} 
-          scrollToBarChart={() => scrollToRef(barChartRef)} 
-          scrollToHeatmap={() => scrollToRef(heatmapRef)} 
-          scrollToReadings={() => scrollToRef(readingsRef)} 
-          scrollToDataTable={() => scrollToRef(dataTableRef)} 
+      <Routes>
+        {/* Route for the main page */}
+        <Route 
+          path="DataMonitoring" 
+          element={
+            <div className="bg-[#001D31] min-h-screen flex flex-col">
+              <Header 
+                scrollToLineChart={() => scrollToRef(lineChartRef)} 
+                scrollToBarChart={() => scrollToRef(barChartRef)} 
+                scrollToHeatmap={() => scrollToRef(heatmapRef)} 
+                scrollToReadings={() => scrollToRef(readingsRef)} 
+                scrollToDataTable={() => scrollToRef(dataTableRef)} 
+              />
+              
+              <div className="flex-grow container mx-auto p-4 mt-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                  <div className="p-6 bg-gray-900 rounded-lg shadow-lg flex flex-col items-center" ref={lineChartRef}>
+                    <LineChart />
+                  </div>
+                  <div className="p-6 bg-gray-900 rounded-lg shadow-lg flex flex-col items-center" ref={barChartRef}>
+                    <BarChart />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                  <div className="p-6 bg-gray-900 rounded-lg shadow-lg" ref={heatmapRef}>
+                    <Heatmap />
+                  </div>
+                  <div className="p-6 bg-gray-900 rounded-lg shadow-lg" ref={readingsRef}>
+                    <PollutantReadings />
+                  </div>
+                </div>
+
+                <div className="mt-6 p-6 bg-gray-900 rounded-lg shadow-lg" ref={dataTableRef}>
+                  <DataTable />
+                </div>
+              </div>
+            </div>
+          } 
         />
-        
-        <div className="flex-grow container mx-auto p-4 mt-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-            <div className="p-6 bg-gray-900 rounded-lg shadow-lg flex flex-col items-center" ref={lineChartRef}>
-              <LineChart />
-            </div>
-            <div className="p-6 bg-gray-900 rounded-lg shadow-lg flex flex-col items-center" ref={barChartRef}>
-              <BarChart />
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            <div className="p-6 bg-gray-900 rounded-lg shadow-lg" ref={heatmapRef}>
-              <Heatmap />
-            </div>
-            <div className="p-6 bg-gray-900 rounded-lg shadow-lg" ref={readingsRef}>
-              <PollutantReadings />
-            </div>
-          </div>
-
-          <div className="mt-6 p-6 bg-gray-900 rounded-lg shadow-lg" ref={dataTableRef}>
-            <DataTable />
-          </div>
-        </div>
-      </div>
+        {/* Route for the public page */}
+        <Route path="/" element={<PublicPage />} />
+      </Routes>
     </Router>
   );
 }

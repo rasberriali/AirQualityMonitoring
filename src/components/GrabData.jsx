@@ -14,7 +14,7 @@ const jsonToCsv = (jsonData) => {
   csvRows.push(headers.join(',')); 
 
   jsonData.forEach(row => {
-    const values = headers.map(header => {t
+    const values = headers.map(header => {
       if (row[header]) {
         const value = row[header].N || row[header].S || '';
         return typeof value === 'string' ? value.replace(/\n/g, '').trim() : value;

@@ -6,7 +6,7 @@ function HeroSection() {
       <div className='flex flex-row xl:text-7xl text-2xl font-bold xl:px-32 px-6  text-white  '>
             Air Quality Monitoring
       </div>
-      <div className='w-full  mt-8 xl:text-xl text-sm xl:px-32 px-6 text-[#9D9BB6]'>
+      <div className='w-full  mt-8 xl:text-lg text-xs xl:px-32 px-6 text-[#9D9BB6]'>
         <p>
         The System aims to provide accurate, real-time, and 
         comprehensive air quality information through an interactive and user-friendly

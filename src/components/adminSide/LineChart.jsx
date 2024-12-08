@@ -150,18 +150,37 @@ const LineChart = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  // Legend customization options
+  const options = {
+    plugins: {
+      legend: {
+        position: 'top', // Positions the legend on top
+        labels: {
+          font: {
+            size: 12, // Adjust the font size of the legend
+          },
+          color: 'gray', // Set the text color of the legend
+          boxWidth: 10, // Adjust the size of the legend color box
+          boxHeight: 10, // Adjust the height of the legend color box
+        },
+        align: 'center', // Aligns the legend items in a row (left)
+        // Alternatively, use `align: 'center'` if you want to center the legend items
+      },
+    },
+  };
+
   return (
     <div className="w-full p-6 rounded-lg">
       <h3 className="text-lg font-semibold mb-4 text-center text-white">Time Series Line Chart</h3>
       <div className="bg-gray-800 p-4 rounded-lg">
-        <Line data={chartData} height={200} />
+      <Line data={chartData} options={options} height={200} />
       </div>
       <div className="flex flex-col items-center mt-6">
         <div className="h-1 w-3/4 bg-gray-100 rounded-full mb-4"></div>
         
         <div 
           ref={textRef} 
-          className={`text-gray-500 text-center text-base leading-relaxed shadow-md p-4 rounded-lg bg-gray-900 bg-opacity-60 max-w-3xl fade-in ${isVisible ? 'fade-in-visible' : ''}`}
+          className={`text-gray-500 text-center text-base leading-relaxed shadow-md p-4 rounded-lg bg-gray-900 bg-opacity-60 max-w-3xl transition-opacity duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
         >
           This dynamic visualization presents real-time air quality data, showcasing the concentrations of key pollutants: 
           <span style={{ color: "rgba(75, 192, 192, 1)" }}> CO2,</span> 

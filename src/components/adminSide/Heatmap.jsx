@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
+
 const Heatmap = () => {
   const [heatmapData, setHeatmapData] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
@@ -65,6 +66,7 @@ const Heatmap = () => {
     return "bg-red-600";                      // Hazardous
   };
 
+
   return (
     <div className="w-full bg-gray-900 p-6 rounded-lg">
       <h3 className="text-lg font-semibold mb-4 text-center text-white">Air Quality Heatmap</h3>
@@ -86,22 +88,22 @@ const Heatmap = () => {
           </React.Fragment>
         ))}
       </div>
-      <div className="flex justify-around text-white mb-4">
-        <div className="flex items-center">
-          <div className="w-4 h-4 bg-green-200 mr-2"></div>
-          <span>Good</span>
+      <div className="flex justify-center items-center text-white mb-4 gap-2">
+        <div className="flex items-center ">
+          <div className="xl:w-4 xl:h-4 w-2 h-2 bg-green-200 mr-2"></div>
+          <span className="text-sm">Good</span>
+        </div>
+        <div className="flex items-center ">
+          <div className="xl:w-4 xl:h-4 w-2 h-2 bg-yellow-400 mr-2"></div>
+          <span className="text-sm">Moderate</span>
         </div>
         <div className="flex items-center">
-          <div className="w-4 h-4 bg-yellow-400 mr-2"></div>
-          <span>Moderate</span>
+          <div className="xl:w-4 xl:h-4 w-2 h-2 bg-orange-400 mr-2"></div>
+          <span className="text-s">Unhealthy</span>
         </div>
         <div className="flex items-center">
-          <div className="w-4 h-4 bg-orange-400 mr-2"></div>
-          <span>Unhealthy</span>
-        </div>
-        <div className="flex items-center">
-          <div className="w-4 h-4 bg-red-600 mr-2"></div>
-          <span>Hazardous</span>
+          <div className="xl:w-4 xl:h-4 w-2 h-2 bg-red-600 mr-2"></div>
+          <span className="text-sm">Hazardous</span>
         </div>
       </div>
       <div className="flex flex-col items-center mt-6">

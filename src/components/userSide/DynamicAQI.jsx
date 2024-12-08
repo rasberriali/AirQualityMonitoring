@@ -125,15 +125,18 @@ const groq = new Groq({ apiKey: import.meta.env.VITE_GROQ_API_KEY,
     
 
     return (
-        <div className="bg-gray-900 p-6 rounded-lg flex items-center space-x-4 shadow-lg">
-        <div
-            className={`flex items-center justify-center w-45 h-39 rounded-full border-4 ${color}`}
-        >
+        
+        <div className="flex flex-row bg-[#111827] xl:p-14 p-10 rounded-lg  items-center gap-8 shadow-lg  ">
+            <div className="">
+         
+        <div className={` flex items-center  justify-center w-45 h-39 rounded-full border-4 ${color}`}>
             <span className="text-4xl font-extrabold text-white">
             {aqi || "..."}
             </span>
         </div>
-        <div>
+        </div>
+
+        <div className="flex flex-col  ">
             <h2 className="text-2xl font-semibold text-white">
             {description || "Loading..."}
             </h2>

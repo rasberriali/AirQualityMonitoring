@@ -58,7 +58,7 @@ function Header() {
     <div className=''>
         <button
           onClick={grabData}
-          className="py-2 px-4 rounded-full bg-violet-500 text-white font-semibold hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-300 shadow-md transition-all">
+          className="xl:py-2 xl:px-6 py-1 px-4 xl:text-base text-sm rounded-full bg-violet-500 text-white font-semibold hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-300 shadow-md transition-all">
           Grab Data
         </button>
     </div>

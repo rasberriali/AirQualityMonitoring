@@ -57,26 +57,29 @@ const WeatherWidget = () => {
   const formattedDate = currentTime.toLocaleDateString('en-GB'); 
 
   return (
-    <div className="flex justify-between items-center text-slate-100 p-2 rounded-md gap-4 max-w-md">
+    <div className="flex justify-between items-center text-slate-100  rounded-md xl:gap-4 gap-2  px-2 ">
+
       <div className="flex items-center flex-col">
-        <div className="text-sm font-normal">{weather.main.temp}°C</div>
+        <div className="xl:text-sm text-xs">{weather.main.temp}°C</div>
         <div className="">
-          <img src={weatherIconUrl} alt="Weather Icon" className="w-10" />
+          <img src={weatherIconUrl} alt="Weather Icon" className="xl:w-10 w-7" />
         </div>
       </div>
 
       <div>
-        <div className="font-normal">{weather.name}</div>
-        <div className="text-xs">
+        <div className="">{weather.name}</div>
+        <div className="xl:text-sm text-xs">
           {weather.sys.country}
         </div>
       </div>
-      <div className="border-l-2 border-blue-500 h-12"></div>
+
+      <div className="border-l-2 border-blue-500 xl:h-12 h-8"></div>
 
       <div className="text-right">
-        <div className="text-xs font-normal">{formattedTime}</div>
-        <div className="text-xs">{formattedDate}</div>
+        <div className="xl:text-sm text-xs ">{formattedTime}</div>
+        <div className="xl:text-sm text-xs">{formattedDate}</div>
       </div>
+
     </div>
   );
 };

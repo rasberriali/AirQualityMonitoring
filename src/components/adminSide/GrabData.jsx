@@ -32,7 +32,7 @@ const jsonToCsv = (jsonData) => {
 
 
 const grabData = async () => {
-  const apiUrl = 'https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/new_AiRizz_Function';
+  const apiUrl = 'https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/items';
   try {
     const response = await axios.get(apiUrl);
     const data = response.data;

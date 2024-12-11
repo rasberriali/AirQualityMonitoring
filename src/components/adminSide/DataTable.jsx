@@ -6,18 +6,19 @@ const DataTable = () => {
   useEffect(() => {
     const fetchData = async () =>{
       try{
-        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/new_AiRizz_Function');
+        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/items');
         const data = await response.json();
 
         if (data.length > 0){
-          const sortedData = data.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
-          const latestReadings = sortedData.slice(0, 10).map((entry) => ({
-            time: entry.TimeStamp.S.trim(),
-            CO2: `${parseInt(entry.CO2_MQ135.N) || 0} ppmm`,
-            PM1_0: `${parseInt(entry.PM1_0.N) || 0} µg/m³`,
-            PM2_5: `${parseInt(entry.PM2_5.N) || 0} µg/m³`,
-            PM10: `${parseInt(entry.PM10.N) || 0} µg/m³`,
-          }));
+          const sortedData = data.sort((a, b) => b.TS - a.TS);
+        const latestReadings = sortedData.slice(0, 10).map((entry) => ({
+          time: entry.TimeStamp.trim(),
+          CO2: `${entry.CO2_MQ135 || 0} ppm`,
+          PM1_0: `${entry.PM1_0 || 0} µg/m³`,
+          PM2_5: `${entry.PM2_5 || 0} µg/m³`,
+          PM10: `${entry.PM10 || 0} µg/m³`,
+        }));
+
           setData(latestReadings);
         }
       } catch (error){

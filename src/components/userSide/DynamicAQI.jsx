@@ -16,18 +16,18 @@ const groq = new Groq({ apiKey: import.meta.env.VITE_GROQ_API_KEY,
         const fetchAQIData = async () => {
         try {
             const response = await fetch(
-            "https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/new_AiRizz_Function"
+            "https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/items"
             );
             const data = await response.json();
 
             if (data.length > 0) {
             const sortedData = data.sort(
-                (a, b) => parseInt(b.TS.N) - parseInt(a.TS.N)
+                (a, b) => parseInt(b.TS) - parseInt(a.TS)
             );
 
             const groupedData = {};
             sortedData.forEach((entry) => {
-                const date = new Date(entry.TimeStamp.S.trim());
+                const date = new Date(entry.TimeStamp.trim());
                 const hourKey = `${date.getFullYear()}-${
                 date.getMonth() + 1
                 }-${date.getDate()} ${date.getHours()}:00`;
@@ -41,10 +41,10 @@ const groq = new Groq({ apiKey: import.meta.env.VITE_GROQ_API_KEY,
                 };
                 }
 
-                groupedData[hourKey].CO2_MQ135 += parseInt(entry.CO2_MQ135.N) || 0;
-                groupedData[hourKey].PM1_0 += parseInt(entry.PM1_0.N) || 0;
-                groupedData[hourKey].PM2_5 += parseInt(entry.PM2_5.N) || 0;
-                groupedData[hourKey].PM10 += parseInt(entry.PM10.N) || 0;
+                groupedData[hourKey].CO2_MQ135 += parseInt(entry.CO2_MQ135) || 0;
+                groupedData[hourKey].PM1_0 += parseInt(entry.PM1_0) || 0;
+                groupedData[hourKey].PM2_5 += parseInt(entry.PM2_5) || 0;
+                groupedData[hourKey].PM10 += parseInt(entry.PM10) || 0;
                 groupedData[hourKey].count += 1;
             });
 

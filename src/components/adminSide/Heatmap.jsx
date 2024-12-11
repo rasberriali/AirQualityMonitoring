@@ -33,19 +33,18 @@ const Heatmap = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/new_AiRizz_Function");
+        const response = await fetch("https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/items");
         const responseData = await response.json();
 
         if (responseData.length > 0) {
-          const sortedData = responseData.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
+          const sortedData = responseData.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS));
 
           const latestReadings = sortedData.slice(0, 4).map((entry) => ({
-            co2: parseInt(entry.CO2_MQ135.N) || 0,
-            pm1: parseInt(entry.PM1_0.N) || 0,
-            pm25: parseInt(entry.PM2_5.N) || 0,
-            pm10: parseInt(entry.PM10.N) || 0,
+            co2: entry.CO2_MQ135 ? parseInt(entry.CO2_MQ135) : 0,
+            pm1: entry.PM1_0 ? parseInt(entry.PM1_0) : 0,
+            pm25: entry.PM2_5 ? parseInt(entry.PM2_5) : 0,
+            pm10: entry.PM10 ? parseInt(entry.PM10) : 0,
           }));
-
           setHeatmapData(latestReadings);
         }
       } catch (error) {

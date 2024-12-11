@@ -38,13 +38,12 @@ const BarChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/new_AiRizz_Function');
+        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/items');
         const data = await response.json();
 
         if (data.length > 0) {
           const sortedData = data.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
           const latestData = sortedData[0];
-
           setCO2(parseInt(latestData.CO2_MQ135.N) || 0);
           setPM1(parseInt(latestData.PM1_0.N) || 0);
           setPM25(parseInt(latestData.PM2_5.N) || 0);
@@ -87,17 +86,17 @@ const BarChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/new_AiRizz_Function');
+        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/items');
         const data = await response.json();
 
         if (data.length > 0) {
-          const sortedData = data.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
+          const sortedData = data.sort((a, b) => b.TS - a.TS); 
           const latestData = sortedData[0];
           const airQualityData = [
-            parseInt(latestData.CO2_MQ135.N) || 0,
-            parseInt(latestData.PM1_0.N) || 0,
-            parseInt(latestData.PM2_5.N) || 0,
-            parseInt(latestData.PM10.N) || 0,
+            latestData.CO2_MQ135 || 0,
+            latestData.PM1_0 || 0,
+            latestData.PM2_5 || 0,
+            latestData.PM10 || 0,
           ];
 
           setChartData((prevState) => ({

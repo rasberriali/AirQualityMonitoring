@@ -36,18 +36,18 @@ const PollutantReadings = () => {
   useEffect(() => {
     const fetchLatestData = async () => {
       try {
-        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/new_AiRizz_Function');
+        const response = await fetch('https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/items');
         const data = await response.json();
 
         if (data.length > 0) {
-          const sortedData = data.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
+          const sortedData = data.sort((a, b) => parseInt(b.TS) - parseInt(a.TS));
           const latestEntry = sortedData[0]; 
 
           setPollutants([
-            { name: "CO2", value: parseInt(latestEntry.CO2_MQ135.N) || 0, max: 1000 },
-            { name: "PM1.0", value: parseInt(latestEntry.PM1_0.N) || 0, max: 100 },
-            { name: "PM2.5", value: parseInt(latestEntry.PM2_5.N) || 0, max: 100 },
-            { name: "PM10", value: parseInt(latestEntry.PM10.N) || 0, max: 100 },
+            { name: "CO2", value: parseInt(latestEntry.CO2_MQ135) || 0, max: 1000 },
+            { name: "PM1.0", value: parseInt(latestEntry.PM1_0) || 0, max: 100 },
+            { name: "PM2.5", value: parseInt(latestEntry.PM2_5) || 0, max: 100 },
+            { name: "PM10", value: parseInt(latestEntry.PM10) || 0, max: 100 },
           ]);
         }
       } catch (error) {

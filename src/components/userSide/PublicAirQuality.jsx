@@ -26,17 +26,17 @@ const AirQualityMetrics = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/new_AiRizz_Function"
+          "https://7mbe947lp3.execute-api.ap-southeast-2.amazonaws.com/items"
         );
         const data = await response.json();
 
         if (data.length > 0) {
           const latestEntry = data[0];
           setMetrics({
-            CO2: parseInt(latestEntry.CO2_MQ135.N) || 0,
-            PM1: parseInt(latestEntry.PM1_0.N) || 0,
-            PM2_5: parseInt(latestEntry.PM2_5.N) || 0,
-            PM10: parseInt(latestEntry.PM10.N) || 0,
+            CO2: parseInt(latestEntry.CO2_MQ135) || 0,
+            PM1: parseInt(latestEntry.PM1_0) || 0,
+            PM2_5: parseInt(latestEntry.PM2_5) || 0,
+            PM10: parseInt(latestEntry.PM10) || 0,
           });
         }
       } catch (error) {

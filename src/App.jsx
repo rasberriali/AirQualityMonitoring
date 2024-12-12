@@ -15,7 +15,7 @@ import HeroSection from "./components/userSide/HeroSection";
 
 function PublicPage() {
   return (
-    <div className="bg-[#001D31]">
+    <div className="bg-[#001D31] min-h-screen">
       <PublicHeader />
       <HeroSection/>
       <div className="flex flex-col xl:px-72 px-6 ">

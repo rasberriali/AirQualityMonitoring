@@ -37,7 +37,7 @@ const Heatmap = () => {
         const responseData = await response.json();
 
         if (responseData.length > 0) {
-          const sortedData = responseData.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS));
+          const sortedData = responseData.sort((a, b) => parseInt(b.TS) - parseInt(a.TS));
 
           const latestReadings = sortedData.slice(0, 4).map((entry) => ({
             co2: entry.CO2_MQ135 ? parseInt(entry.CO2_MQ135) : 0,

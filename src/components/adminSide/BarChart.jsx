@@ -42,12 +42,12 @@ const BarChart = () => {
         const data = await response.json();
 
         if (data.length > 0) {
-          const sortedData = data.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
+          const sortedData = data.sort((a, b) => parseInt(b.TS) - parseInt(a.TS));
           const latestData = sortedData[0];
-          setCO2(parseInt(latestData.CO2_MQ135.N) || 0);
-          setPM1(parseInt(latestData.PM1_0.N) || 0);
-          setPM25(parseInt(latestData.PM2_5.N) || 0);
-          setPM10(parseInt(latestData.PM10.N) || 0);
+          setCO2(parseInt(latestData.CO2_MQ135) || 0);
+          setPM1(parseInt(latestData.PM1_0) || 0);
+          setPM25(parseInt(latestData.PM2_5) || 0);
+          setPM10(parseInt(latestData.PM10) || 0);
         }
       } catch (error) {
         console.error('Error fetching data:', error);

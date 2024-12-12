@@ -69,7 +69,7 @@ const LineChart = () => {
         const data = await response.json();
 
         if (data.length > 0) {
-          const sortedData = data.sort((a, b) => parseInt(b.TS.N) - parseInt(a.TS.N));
+          const sortedData = data.sort((a, b) => parseInt(b.TS) - parseInt(a.TS));
 
           const groupedData = {};
           sortedData.forEach((entry) => {

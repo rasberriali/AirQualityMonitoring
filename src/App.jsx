@@ -11,30 +11,33 @@ import Heatmap from "./components/adminSide/Heatmap";
 import LineChart from "./components/adminSide/LineChart";
 import PollutantReadings from "./components/adminSide/PollutantReadings";
 import HeroSection from "./components/userSide/HeroSection";
+import Notifications from "./components/userSide/Notifications";
 
 
 function PublicPage() {
   return (
-    <div className="bg-[#001D31] min-h-screen">
+    <div className="bg-[#001D31] relative min-h-screen">
       <PublicHeader />
-      <HeroSection/>
-      <div className="flex flex-col xl:px-72 px-6 ">
-
-
-      <div className="mt-12 flex xl:flex-row flex-col  items-center justify-between gap-6 ">
-        <div className="xl:w-1/2 w-full  ">
-        <DynamicAQI /></div>
-        <div className="xl:w-1/2 w-full "><LineChartPublic /></div>
-        </div>
-              <div className="mt-6 mb-12">
-          
-        <AirQualityMetrics /></div>
+      <HeroSection />
+      <div className="flex flex-col xl:px-72 px-6">
+        <div className="mt-12 flex xl:flex-row flex-col  items-center justify-between gap-6 ">
+          <div className="xl:w-1/2 w-full ">
+            <DynamicAQI />
+          </div>
+          <div className="xl:w-1/2 w-full ">
+            <LineChartPublic />
+          </div>
         </div>
 
-
-   </div>
+        <div className="mt-6 mb-12">
+          <AirQualityMetrics />
+        </div>
+      </div>
+      <Notifications />
+    </div>
   );
 }
+
 
 function DataMonitoringPage() {
   const lineChartRef = useRef(null);
